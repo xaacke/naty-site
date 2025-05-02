@@ -1,0 +1,189 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Niver da Naty</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
+
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header" class="alt">
+			<span class="logo"><img src="images/Naty1.jpeg" alt="" /></span>
+			<h1>Para a Naty</h1>
+			<p>Um presente cheio de amor e carinho</p>
+		</header>
+
+		<!-- Nav -->
+		<nav id="nav">
+			<ul>
+				<li><a href="#intro" class="active">Feliz Aniversário</a></li>
+				<li><a href="#galeria">Você é Especial</a></li>
+				<li><a href="#vales">Seu Presente</a></li>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<div id="main">
+
+			<!-- Introduction -->
+			<section id="intro" class="main">
+				<div class="spotlight">
+					<div class="content">
+						<header class="major">
+							<h2>Feliz aniversário!!!</h2>
+						</header>
+						<p>
+							Eu poderia ter comprado flores... poderia ter escrito uma carta... mas resolvi criar um site
+							inteirinho para vc! 🎁 </br>
+							Quero dizer que te amo e celebrar esse dia com você, espero que ele seja mais que especial!
+						</p>
+					</div>
+					<span class="image"><img src="images/nos.jpeg" alt="" /></span>
+				</div>
+			</section>
+
+			<!-- First Section -->
+			<section id="galeria" class="main">
+				<header class="major">
+					<h2>Momentos Especiais</h2>
+				</header>
+				<div class="box alt">
+					<div class="row gtr-50 gtr-uniform">
+						<div class="col-4"><span class="image fit"><img src="images/nosgay.jpeg" alt="Foto 1"></span>
+						</div>
+						<div class="col-4"><span class="image fit"><img src="images/nosjuntas.jpeg" alt="Foto 2"></span>
+						</div>
+						<div class="col-4"><span class="image fit"><img src="images/nosnatal.jpeg" alt="Foto 3"></span>
+						</div>
+						<div class="col-4"><span class="image fit"><img src="images/nosparque.jpeg" alt="Foto 4"></span>
+						</div>
+						<div class="col-4"><span class="image fit"><img src="images/nosprais.jpeg" alt="Foto 5"></span>
+						</div>
+						<div class="col-4"><span class="image fit"><img src="images/nossp.jpeg" alt="Foto 6"></span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Second Section -->
+			<section id="vales" class="main special">
+				<header class="major">
+					<h2>Vales para a Minha Princesa</h2>
+				</header>
+				<ul class="features">
+					<li>
+						<span class="icon solid major fa-heart"></span>
+						<h3>Vale Massagem</h3>
+						<button class="button primary small" onclick="usarVale('Vale Massagem')">Usar Vale</button>
+					</li>
+					<li>
+						<span class="icon solid major fa-tree"></span>
+						<h3>Vale Passeio no Parque</h3>
+						<button class="button primary small" onclick="usarVale('Vale Passeio no Parque')">Usar
+							Vale</button>
+					</li>
+					<li>
+						<span class="icon solid major fa-film"></span>
+						<h3>Vale Maratona de Filmes/Séries</h3>
+						<button class="button primary small" onclick="usarVale('Vale Maratona de Filmes/Séries')">Usar
+							Vale</button>
+					</li>
+					<li>
+						<span class="icon solid major fa-utensils"></span>
+						<h3>Vale Cozinha Pra Mim</h3>
+						<button class="button primary small" onclick="usarVale('Vale Cozinha Pra Mim')">Usar
+							Vale</button>
+					</li>
+					<li>
+						<span class="icon solid major fa-star"></span>
+						<h3>Vale Pedido Especial</h3>
+						<button class="button primary small" onclick="usarVale('Vale Pedido Especial')">Usar
+							Vale</button>
+					</li>
+				</ul>
+			</section>
+
+		</div>
+
+		<footer id="footer">
+			<section>
+				<h2>Com todo meu amor</h2>
+				<p>Feito com carinho para você, Naty. ❤️</p>
+			</section>
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+<script>
+    (function(){
+        emailjs.init("7GvcJrgGno6OGOdp1");
+        // Quando a página carrega, desativa os vales já usados
+        document.addEventListener('DOMContentLoaded', function() {
+            const valesUsados = JSON.parse(localStorage.getItem('valesUsados')) || [];
+            valesUsados.forEach(vale => {
+                const button = document.querySelector(`button[data-vale='${vale}']`);
+                if (button) {
+                    button.disabled = true;
+                    button.textContent = "Vale já usado!";
+                    button.classList.remove('primary');
+                    button.classList.add('disabled');
+                }
+            });
+        });
+    })();
+
+    function usarVale(vale) {
+        const button = event.target;
+
+        // Verifica se já foi usado (caso raro)
+        if (button.disabled) {
+            alert('Esse vale já foi usado!');
+            return;
+        }
+
+        emailjs.send("service_n9sksop", "template_zs6bgjc", {
+            vale: vale
+        }).then(function(response) {
+            alert('Vale enviado com sucesso! Em breve ele chegará até você!');
+
+            // Desativa botão
+            button.disabled = true;
+            button.textContent = "Vale já usado!";
+            button.classList.remove('primary');
+            button.classList.add('disabled');
+
+            // Salva no LocalStorage
+            let valesUsados = JSON.parse(localStorage.getItem('valesUsados')) || [];
+            valesUsados.push(vale);
+            localStorage.setItem('valesUsados', JSON.stringify(valesUsados));
+
+        }, function(error) {
+            alert('Ops, houve um erro ao enviar o vale. Tente novamente.');
+        });
+    }
+</script>
+
+
+
+</body>
+
+</html>
