@@ -84,19 +84,20 @@
 					<li>
 						<span class="icon solid major fa-heart"></span>
 						<h3>Vale Massagem</h3>
-						<button class="button primary small" onclick="usarVale('Vale Massagem')">Usar Vale</button>
+						<button class="button primary small" onclick="usarVale('Vale Massagem')"
+							data-vale="Vale Massagem">Usar Vale</button>
 					</li>
 					<li>
 						<span class="icon solid major fa-tree"></span>
 						<h3>Vale Passeio no Parque</h3>
-						<button class="button primary small" onclick="usarVale('Vale Passeio no Parque')">Usar
-							Vale</button>
+						<button class="button primary small" onclick="usarVale('Vale Passeio no Parque')"
+							data-vale="Vale Passeio no Parque">Usar Vale</button>
 					</li>
 					<li>
 						<span class="icon solid major fa-film"></span>
 						<h3>Vale Maratona de Filmes/Séries</h3>
-						<button class="button primary small" onclick="usarVale('Vale Maratona de Filmes/Séries')">Usar
-							Vale</button>
+						<button class="button primary small" onclick="usarVale('Vale Maratona de Filmes/Séries')"
+							data-vale="Vale Maratona de Filmes/Séries">Usar Vale</button>
 					</li>
 					<li>
 						<span class="icon solid major fa-utensils"></span>
@@ -107,8 +108,8 @@
 					<li>
 						<span class="icon solid major fa-star"></span>
 						<h3>Vale Pedido Especial</h3>
-						<button class="button primary small" onclick="usarVale('Vale Pedido Especial')">Usar
-							Vale</button>
+						<button class="button primary small" onclick="usarVale('Vale Pedido Especial')"
+							data-vale="Vale Pedido Especial">Usar Vale</button>
 					</li>
 				</ul>
 			</section>
@@ -125,62 +126,56 @@
 	</div>
 
 	<!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.scrollex.min.js"></script>
-<script src="assets/js/jquery.scrolly.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
-<script>
-    (function(){
-        emailjs.init("7GvcJrgGno6OGOdp1");
-        // Quando a página carrega, desativa os vales já usados
-        document.addEventListener('DOMContentLoaded', function() {
-            const valesUsados = JSON.parse(localStorage.getItem('valesUsados')) || [];
-            valesUsados.forEach(vale => {
-                const button = document.querySelector(`button[data-vale='${vale}']`);
-                if (button) {
-                    button.disabled = true;
-                    button.textContent = "Vale já usado!";
-                    button.classList.remove('primary');
-                    button.classList.add('disabled');
-                }
-            });
-        });
-    })();
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script>
+		(function () {
+			emailjs.init("7GvcJrgGno6OGOdp1");
 
-    function usarVale(vale) {
-        const button = event.target;
+			document.addEventListener('DOMContentLoaded', function () {
+				const valesUsados = JSON.parse(localStorage.getItem('valesUsados')) || [];
+				valesUsados.forEach(vale => {
+					const button = document.querySelector(`button[data-vale='${vale}']`);
+					if (button) {
+						button.disabled = true;
+						button.textContent = "Vale já usado!";
+						button.classList.remove('primary');
+						button.classList.add('disabled');
+					}
+				});
+			});
+		})();
 
-        // Verifica se já foi usado (caso raro)
-        if (button.disabled) {
-            alert('Esse vale já foi usado!');
-            return;
-        }
+		function usarVale(vale) {
+			const button = event.target;
 
-        emailjs.send("service_n9sksop", "template_zs6bgjc", {
-            vale: vale
-        }).then(function(response) {
-            alert('Vale enviado com sucesso! Em breve ele chegará até você!');
+			// Verifica se já foi usado
+			if (button.disabled) {
+				alert('Esse vale já foi usado!');
+				return;
+			}
 
-            // Desativa botão
-            button.disabled = true;
-            button.textContent = "Vale já usado!";
-            button.classList.remove('primary');
-            button.classList.add('disabled');
+			// Nova mensagem de sucesso
+			alert('Seu vale foi resgatado, amor! ❤️');
 
-            // Salva no LocalStorage
-            let valesUsados = JSON.parse(localStorage.getItem('valesUsados')) || [];
-            valesUsados.push(vale);
-            localStorage.setItem('valesUsados', JSON.stringify(valesUsados));
+			// Desativa botão
+			button.disabled = true;
+			button.textContent = "Vale já usado!";
+			button.classList.remove('primary');
+			button.classList.add('disabled');
 
-        }, function(error) {
-            alert('Ops, houve um erro ao enviar o vale. Tente novamente.');
-        });
-    }
-</script>
+			// Salva no LocalStorage
+			let valesUsados = JSON.parse(localStorage.getItem('valesUsados')) || [];
+			valesUsados.push(vale);
+			localStorage.setItem('valesUsados', JSON.stringify(valesUsados));
+		}
+	</script>
+
 
 
 
